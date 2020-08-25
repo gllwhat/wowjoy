@@ -19,5 +19,6 @@ export { default as Confirm, confirm } from './Confirm';
 export { default as Select } from './Select';
 export { default as Tooltip } from './Tooltip';
 export { default as ClickAwayListener } from './ClickAwayListener';
+export { default as Steps } from './Steps';
 
 export * from './transitions';
