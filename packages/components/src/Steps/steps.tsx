@@ -76,36 +76,51 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   sourceDatas: sourceDatasType[];
   // 最后一个节点是否展示对号 默认展示
   lastNodeShowRightIcon?: boolean;
+  type?: 'node' | 'line';
 }
 
-const Steps: FC<Props> = ({ sourceDatas, lastNodeShowRightIcon = true, ...props }) => {
+const Steps: FC<Props> = ({
+  sourceDatas,
+  lastNodeShowRightIcon = true,
+  type = 'node',
+  ...props
+}) => {
   const theme = useWowTheme();
 
   const [StepChild, setStepChild] = useState([]);
 
   useEffect(() => {
     let children = [];
-    sourceDatas.map((item, index) => {
-      children.push({
-        step: (
-          <div style={{ width: '24px' }}>
-            {lastNodeShowRightIcon && index === sourceDatas.length - 1 ? (
-              <LastStepIcon theme={theme} status={item.status} />
-            ) : (
-              <Step key={index + 1} theme={theme} status={item.status}>
-                {index + 1}
-              </Step>
-            )}
+    switch (type) {
+      case 'node':
+        sourceDatas.map((item, index) => {
+          children.push({
+            step: (
+              <div style={{ width: '24px' }}>
+                {lastNodeShowRightIcon && index === sourceDatas.length - 1 ? (
+                  <LastStepIcon theme={theme} status={item.status} />
+                ) : (
+                  <Step key={index + 1} theme={theme} status={item.status}>
+                    {index + 1}
+                  </Step>
+                )}
 
-            <StepText theme={theme} text={item.name} status={item.status}>
-              {item.name}
-            </StepText>
-          </div>
-        ),
-        line: index !== 0,
-        status: item.status,
-      });
-    });
+                <StepText theme={theme} text={item.name} status={item.status}>
+                  {item.name}
+                </StepText>
+              </div>
+            ),
+            line: index !== 0,
+            status: item.status,
+          });
+        });
+        break;
+      case 'line':
+        break;
+      default:
+        break;
+    }
+
     setStepChild(children);
   }, [sourceDatas]);
 
