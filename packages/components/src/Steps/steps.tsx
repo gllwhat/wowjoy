@@ -115,6 +115,7 @@ const Steps: FC<Props> = ({
           });
         });
         break;
+      //
       case 'line':
         break;
       default:
